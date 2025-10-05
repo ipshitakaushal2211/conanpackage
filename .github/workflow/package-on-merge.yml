@@ -1,0 +1,32 @@
+name: Package Creation After Merge
+
+on:
+  push:
+    branches:
+      - main  # Run this only when code is pushed to main
+
+jobs:
+  build-and-package:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install Conan
+      run: |
+        pip install conan
+
+    - name: Simulate Build Folder
+      run: |
+        mkdir build
+        echo "Simulated build file" > build/build.bash
+
+    - name: Simulate Output Folder
+      run: |
+        mkdir output
+        echo "Simulated output file" > output/endstate.fxd
+
+    - name: Package with Conan
+      run: |
+        echo "Packaging build and output folders with Conan"
