@@ -7,5 +7,6 @@ class IWTestAutomationPackage(ConanFile):
     no_copy_source = True
 
     def package(self):
+        # Include all files from the build and output folders inside package_contents
         self.copy("*", dst="build", src="package_contents/build")
         self.copy("*", dst="output", src="package_contents/output")
