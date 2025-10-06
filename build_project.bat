@@ -1,18 +1,30 @@
 @echo off
-echo === Building Project ===
+echo === Starting Build Process ===
 
-REM Replace this with your actual build command
-REM Example: msbuild MyProject.sln /p:Configuration=Release
+REM Step 1: Create and move into the build directory
+mkdir build
+cd build
 
-echo === Build Complete ===
+REM Step 2: Run CMake to configure the project
+cmake ..
 
-REM Create a folder to collect files for packaging
+REM Step 3: Build the project
+cmake --build .
+
+REM Step 4: Go back to repo root
+cd ..
+
+REM Step 5: Create output folder and simulate end state file
+mkdir output
+echo End state file > output\end_state.txt
+
+REM Step 6: Create package_contents folder
 mkdir package_contents
 
-REM Copy build folder
+REM Step 7: Copy build folder into package_contents
 xcopy /E /I build package_contents\build
 
-REM Copy output folder
+REM Step 8: Copy output folder into package_contents
 xcopy /E /I output package_contents\output
 
-echo === Files Ready for Packaging ===
+echo === Build and Packaging Preparation Complete ===
