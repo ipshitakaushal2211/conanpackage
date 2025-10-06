@@ -3,11 +3,12 @@ name: Package Creation After Merge
 on:
   push:
     branches:
-      - main  # Run this only when code is pushed to main
+      - main  # This triggers the job when a PR is merged into main
+
 
 jobs:
   build-and-package:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Checkout code
@@ -17,16 +18,17 @@ jobs:
       run: |
         pip install conan
 
-    - name: Simulate Build Folder
-      run: |
-        mkdir build
-        echo "Simulated build file" > build/build.bash
+    - name: Run build script
+        run: |
+          REM This script builds the project
+          REM It creates the 'output' folder containing end states
+          REM It also collects the existing 'build' folder from the repo
+          call build_project.bat
 
-    - name: Simulate Output Folder
-      run: |
-        mkdir output
-        echo "Simulated output file" > output/endstate.fxd
 
-    - name: Package with Conan
-      run: |
-        echo "Packaging build and output folders with Conan"
+    
+    - name: Create Conan package
+        run: |
+          REM Package the 'build' and 'output' folders into a Conan package
+          conan create . --name=IWTestAutomation --version=1.0
+
